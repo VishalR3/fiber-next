@@ -9,23 +9,41 @@ function Box(props) {
   const [hovered, setHover] = useState(false);
   const [active, setActive] = useState(false);
   // Subscribe this component to the render-loop, rotate the mesh every frame
+  let gotDefaultOrientation = false;
+  let defX, defY, defZ;
 
   useFrame(
     (state, delta) => {
       try {
-        window.addEventListener(
-          "deviceorientation",
-          (event) => {
-            const rotateDegrees = event.alpha; // alpha: rotation around z-axis
-            const leftToRight = event.gamma; // gamma: left to right
-            const frontToBack = event.beta; // beta: front back motion
-            mesh.current.rotation.x = frontToBack / 112.5;
-            mesh.current.rotation.y = leftToRight / 112.5;
-            mesh.current.rotation.z = rotateDegrees / 112.5;
-            // handleOrientationEvent(frontToBack, leftToRight, rotateDegrees);
-          },
-          true
-        );
+        if (!gotDefaultOrientation) {
+          window.addEventListener(
+            "deviceorientation",
+            (event) => {
+              const rotateDegrees = event.alpha; // alpha: rotation around z-axis
+              const leftToRight = event.gamma; // gamma: left to right
+              const frontToBack = event.beta; // beta: front back motion
+              defX = frontToBack / 112.5;
+              defY = leftToRight / 112.5;
+              defZ = rotateDegrees / 112.5;
+              // handleOrientationEvent(frontToBack, leftToRight, rotateDegrees);
+            },
+            true
+          );
+        } else {
+          window.addEventListener(
+            "deviceorientation",
+            (event) => {
+              const rotateDegrees = event.alpha; // alpha: rotation around z-axis
+              const leftToRight = event.gamma; // gamma: left to right
+              const frontToBack = event.beta; // beta: front back motion
+              mesh.current.rotation.x = frontToBack / 112.5 - defX;
+              mesh.current.rotation.y = leftToRight / 112.5 - defY;
+              mesh.current.rotation.z = rotateDegrees / 112.5 - defZ;
+              // handleOrientationEvent(frontToBack, leftToRight, rotateDegrees);
+            },
+            true
+          );
+        }
       } catch (err) {
         console.log(err);
       }

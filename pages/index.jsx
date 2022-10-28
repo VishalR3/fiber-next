@@ -20,7 +20,7 @@ export default function Home() {
   };
   const vibrate = () => {
     if (navigator.vibrate) {
-      navigator.vibrate([200, 100, 200]);
+      navigator.vibrate([100, 100, 200, 100]);
     } else {
       alert("Does not support vibration " + navigator.platform);
     }
