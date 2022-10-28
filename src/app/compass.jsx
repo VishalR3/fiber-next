@@ -15,35 +15,19 @@ function Box(props) {
   useFrame(
     (state, delta) => {
       try {
-        if (!gotDefaultOrientation) {
-          window.addEventListener(
-            "deviceorientation",
-            (event) => {
-              const rotateDegrees = event.alpha; // alpha: rotation around z-axis
-              const leftToRight = event.gamma; // gamma: left to right
-              const frontToBack = event.beta; // beta: front back motion
-              defX = frontToBack / 112.5;
-              defY = leftToRight / 112.5;
-              defZ = rotateDegrees / 112.5;
-              gotDefaultOrientation = true;
-            },
-            true
-          );
-        } else {
-          window.addEventListener(
-            "deviceorientation",
-            (event) => {
-              const rotateDegrees = event.alpha; // alpha: rotation around z-axis
-              const leftToRight = event.gamma; // gamma: left to right
-              const frontToBack = event.beta; // beta: front back motion
-              mesh.current.rotation.x = frontToBack / 112.5 - defX;
-              mesh.current.rotation.y = leftToRight / 112.5 - defY;
-              mesh.current.rotation.z = rotateDegrees / 112.5 - defZ;
-              // handleOrientationEvent(frontToBack, leftToRight, rotateDegrees);
-            },
-            true
-          );
-        }
+        window.addEventListener(
+          "deviceorientation",
+          (event) => {
+            const rotateDegrees = event.alpha; // alpha: rotation around z-axis
+            const leftToRight = event.gamma; // gamma: left to right
+            const frontToBack = event.beta; // beta: front back motion
+            mesh.current.rotation.x = Math.abs(frontToBack) / 112.5;
+            mesh.current.rotation.y = Math.abs(leftToRight) / 112.5;
+            mesh.current.rotation.z = Math.abs(rotateDegrees) / 112.5;
+            // handleOrientationEvent(frontToBack, leftToRight, rotateDegrees);
+          },
+          true
+        );
       } catch (err) {
         console.log(err);
       }
