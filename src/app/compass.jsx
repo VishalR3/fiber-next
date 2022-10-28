@@ -11,7 +11,7 @@ function Box(props) {
 
   useFrame(
     (state, delta) => {
-      if (window.DeviceOrientationEvent) {
+      try {
         window.addEventListener(
           "deviceorientation",
           (event) => {
@@ -25,8 +25,8 @@ function Box(props) {
           },
           true
         );
-      } else {
-        alert("Does not support DeviceOrientationEvent " + navigator.platform);
+      } catch (err) {
+        console.log(err);
       }
     }
     // mesh.current.rotation.x += 0.01
@@ -51,6 +51,7 @@ export default function Compass() {
   return (
     <Canvas>
       <ambientLight />
+      <axesHelper args={[5]} />
       <pointLight position={[10, 10, 10]} />
       <Box position={[0, 0, 0]} />
     </Canvas>
