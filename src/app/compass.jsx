@@ -25,6 +25,8 @@ function Box(props) {
           },
           true
         );
+      } else {
+        alert("Does not support DeviceOrientationEvent " + navigator.platform);
       }
     }
     // mesh.current.rotation.x += 0.01
