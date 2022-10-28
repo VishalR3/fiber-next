@@ -25,7 +25,7 @@ function Box(props) {
               defX = frontToBack / 112.5;
               defY = leftToRight / 112.5;
               defZ = rotateDegrees / 112.5;
-              // handleOrientationEvent(frontToBack, leftToRight, rotateDegrees);
+              gotDefaultOrientation = true;
             },
             true
           );
