@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
+import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 
 function Box(props) {
   // This reference will give us direct access to the mesh
@@ -18,9 +19,9 @@ function Box(props) {
             const rotateDegrees = event.alpha; // alpha: rotation around z-axis
             const leftToRight = event.gamma; // gamma: left to right
             const frontToBack = event.beta; // beta: front back motion
-            mesh.current.rotation.x = frontToBack / 90;
-            mesh.current.rotation.y = leftToRight / 90;
-            mesh.current.rotation.z = rotateDegrees / 90;
+            mesh.current.rotation.x = frontToBack / 112.5;
+            mesh.current.rotation.y = leftToRight / 112.5;
+            mesh.current.rotation.z = rotateDegrees / 112.5;
             // handleOrientationEvent(frontToBack, leftToRight, rotateDegrees);
           },
           true
@@ -50,6 +51,8 @@ function Box(props) {
 export default function Compass() {
   return (
     <Canvas>
+      <PerspectiveCamera makeDefault position={[0, 0, 5]} />
+      <OrbitControls />
       <ambientLight />
       <axesHelper args={[5]} />
       <pointLight position={[10, 10, 10]} />
