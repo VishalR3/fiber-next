@@ -42,6 +42,9 @@ const CanvasComponent = () => {
     balls.push(
       new Ball(p5.mouseX, p5.mouseY, p5.random(30, 70), balls.length, balls)
     );
+    if (balls.length > 25) {
+      balls.shift();
+    }
   };
   const doubleClicked = (p5) => {
     balls.forEach((ball) => {
@@ -109,8 +112,8 @@ const CanvasComponent = () => {
     }
 
     gainVelocity() {
-      this.vx += Math.random() * 20;
-      this.vy += Math.random() * 20;
+      this.vx += Math.random() * 10;
+      this.vy += Math.random() * 10;
     }
 
     display(p5) {
