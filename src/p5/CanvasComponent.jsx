@@ -38,6 +38,16 @@ const CanvasComponent = () => {
       ball.display(p5);
     });
   };
+  const mouseClicked = (p5) => {
+    balls.push(
+      new Ball(p5.mouseX, p5.mouseY, p5.random(30, 70), balls.length, balls)
+    );
+  };
+  const doubleClicked = (p5) => {
+    balls.forEach((ball) => {
+      ball.gainVelocity();
+    });
+  };
   class Ball {
     constructor(xin, yin, din, idin, oin) {
       this.x = xin;
@@ -98,12 +108,25 @@ const CanvasComponent = () => {
       }
     }
 
+    gainVelocity() {
+      this.vx += Math.random() * 20;
+      this.vy += Math.random() * 20;
+    }
+
     display(p5) {
       p5.fill(this.color);
       p5.ellipse(this.x, this.y, this.diameter, this.diameter);
     }
   }
-  return <Sketch preload={preload} setup={setup} draw={draw} />;
+  return (
+    <Sketch
+      preload={preload}
+      setup={setup}
+      draw={draw}
+      mouseClicked={mouseClicked}
+      doubleClicked={doubleClicked}
+    />
+  );
 };
 
 export default CanvasComponent;
