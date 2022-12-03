@@ -5,6 +5,32 @@ import useMeasure from "react-use-measure";
 import polyfill from "@juggle/resize-observer";
 import { useRef } from "react";
 
+const Spheres = ({ n }) => {
+  const [ref, { width, height }] = useMeasure({ polyfill });
+  const group = useRef();
+
+  const renderSphere = (num) => {
+    let list = [];
+    for (let i = 0; i < num; i++) {
+      list.push(
+        <mesh key={i} position={[0, -3.5 + i * 2, 0]}>
+          <sphereGeometry args={[1, 32, 32]} />
+          <meshStandardMaterial
+            color={new THREE.Color(`hsl(${(i * 300) / num + 60}, 50%, 50%)`)}
+            opacity={0.5}
+          />
+        </mesh>
+      );
+    }
+    return list;
+  };
+
+  useFrame(() => {
+    group.current.rotation.z += 0.01;
+  });
+  return <group ref={group}>{renderSphere(n)}</group>;
+};
+
 const MyBackground = ({ boxSize, ratio }) => {
   const box = useRef();
   let color = `hsl(${Math.floor(Math.random() * 360)},50%,20%)`;
@@ -14,6 +40,11 @@ const MyBackground = ({ boxSize, ratio }) => {
     time += delta * 0.05;
     state.scene.background = new THREE.Color(
       `hsl(${Math.floor(time * 360)},50%,20%)`
+    );
+    state.scene.fog = new THREE.Fog(
+      `hsl(${Math.floor(time * 360)},50%,20%)`,
+      1,
+      100
     );
   });
   return (
