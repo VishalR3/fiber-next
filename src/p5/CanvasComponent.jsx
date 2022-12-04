@@ -112,8 +112,8 @@ const CanvasComponent = () => {
     }
 
     gainVelocity() {
-      this.vx += Math.random() * 10;
-      this.vy += Math.random() * 10;
+      this.vx += (Math.random() - 0.5) * 40;
+      this.vy += (Math.random() - 0.5) * 40;
     }
 
     display(p5) {
