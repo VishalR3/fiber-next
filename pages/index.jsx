@@ -1,4 +1,5 @@
 import Scene from "../src/app/box";
+import Link from "next/link";
 import Compass from "../src/app/compass";
 import styles from "../styles/Home.module.css";
 
@@ -28,9 +29,41 @@ export default function Home() {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <h1 className={styles.title}>
+        <h3>
           Welcome to <a href="https://nextjs.org">Next.js with Three.js!</a>
-        </h1>
+        </h3>
+        <div className="container">
+          <div className="text-center">Pages</div>
+          <div className="row">
+            <div className="col-md-3">
+              <div className={styles.card}>
+                <div className="text-center">
+                  <Link className="btn btn-primary" href="/classes">
+                    classes
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-3">
+              <div className={styles.card}>
+                <div className="text-center">
+                  <Link className="btn btn-primary" href="/p5">
+                    p5
+                  </Link>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-3">
+              <div className={styles.card}>
+                <div className="text-center">
+                  <Link className="btn btn-primary" href="/glassy">
+                    Glassy
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <Scene />
         <div className="container">

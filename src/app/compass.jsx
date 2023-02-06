@@ -21,9 +21,11 @@ function Box(props) {
             const rotateDegrees = event.alpha; // alpha: rotation around z-axis
             const leftToRight = event.gamma; // gamma: left to right
             const frontToBack = event.beta; // beta: front back motion
-            mesh.current.rotation.x = Math.abs(frontToBack) / 112.5;
-            mesh.current.rotation.y = Math.abs(leftToRight) / 112.5;
-            mesh.current.rotation.z = Math.abs(rotateDegrees) / 112.5;
+            try {
+              mesh.current.rotation.x = Math.abs(frontToBack) / 112.5;
+              mesh.current.rotation.y = Math.abs(leftToRight) / 112.5;
+              mesh.current.rotation.z = Math.abs(rotateDegrees) / 112.5;
+            } catch (e) {}
             // handleOrientationEvent(frontToBack, leftToRight, rotateDegrees);
           },
           true

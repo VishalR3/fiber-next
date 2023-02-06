@@ -1,13 +1,7 @@
 import { Box, Card, CardContent, Grid, styled } from "@mui/material";
 import Background from "../../src/glassy/background";
 import WardrobePreview from "../../src/glassy/WardrobePreview";
-
-const GlassyCard = styled(Card)({
-  background: "rgba(17,25,40,0.75)",
-  backdropFilter: "blur(16px) saturate(180%)",
-  minHeight: "150px",
-  borderRadius: "1.25rem",
-});
+import { GlassyCard, GradientBorder } from "../p5";
 
 const Glassy = () => {
   return (
@@ -16,8 +10,15 @@ const Glassy = () => {
         <div className="glassy">
           <Box m={5}>
             <GlassyCard>
+              <GradientBorder></GradientBorder>
               <CardContent>
-                <Grid container spacing={3} p={3}>
+                <Grid
+                  container
+                  spacing={3}
+                  p={3}
+                  justifyContent="center"
+                  alignItems={"center"}
+                >
                   <Grid item>
                     <WardrobePreview wardrobe={"Name"} />
                   </Grid>

@@ -1,7 +1,7 @@
 import { Box, Card, CardContent, Grid, styled } from "@mui/material";
 import dynamic from "next/dynamic";
 
-const GlassyCard = styled(Card)({
+export const GlassyCard = styled(Card)({
   background: "rgba(17,25,40,0.25)",
   // background:
   //   "linear-gradient(-45deg, rgba(0,0,0,0.20) 0%, rgba(17,25,40,0.75) 100%)",
@@ -12,7 +12,7 @@ const GlassyCard = styled(Card)({
   color: "white",
 });
 
-const GradientBorder = styled("div")({
+export const GradientBorder = styled("div")({
   position: "absolute",
   top: 0,
   left: 0,
