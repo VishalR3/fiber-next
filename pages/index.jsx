@@ -1,99 +1,82 @@
+import { useState } from "react";
+import { useRouter } from "next/router";
 import Scene from "../src/app/box";
-import Link from "next/link";
-import Compass from "../src/app/compass";
 import styles from "../styles/Home.module.css";
+import ShareAPI from "../src/app/webAPI/ShareAPI";
+import VibrateAPI from "../src/app/webAPI/VibrateAPI";
+import OrientationAPI from "../src/app/webAPI/OrientationAPI";
+import BatteryAPI from "../src/app/webAPI/BatteryAPI";
+import {
+  Button,
+  Card,
+  CardContent,
+  MenuItem,
+  SwipeableDrawer,
+} from "@mui/material";
 
 export default function Home() {
-  const shareData = {
-    title: "Vishal Rana",
-    text: "Trying the default share of devices, here's my portfolio link",
-    url: "https://vishalrana.in",
-  };
-  const shareit = () => {
-    if (navigator.share) {
-      navigator
-        .share(shareData)
-        .then(() => console.log("Successful share"))
-        .catch((error) => console.log("Error sharing", error));
-    } else {
-      alert("Sharing Not Supported on " + navigator.platform + "!");
+  const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const toggleDrawer = (open) => (event) => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
     }
-  };
-  const vibrate = () => {
-    if (navigator.vibrate) {
-      navigator.vibrate([100, 100, 200, 100]);
-    } else {
-      alert("Does not support vibration " + navigator.platform);
-    }
+    setOpen(open);
   };
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <h3>
-          Welcome to <a href="https://nextjs.org">Next.js with Three.js!</a>
-        </h3>
-        <div className="container">
-          <div className="text-center">Pages</div>
-          <div className="row">
-            <div className="col-md-3">
-              <div className={styles.card}>
-                <div className="text-center">
-                  <Link className="btn btn-primary" href="/classes">
-                    classes
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-3">
-              <div className={styles.card}>
-                <div className="text-center">
-                  <Link className="btn btn-primary" href="/p5">
-                    p5
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-3">
-              <div className={styles.card}>
-                <div className="text-center">
-                  <Link className="btn btn-primary" href="/glassy">
-                    Glassy
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <h3>Testing ground for everything web Related</h3>
 
         <Scene />
         <div className="container">
-          <h3 className="text-center">APIs</h3>
+          <h3 className="text-center mb-5">APIs</h3>
           <div className="row">
-            <div className="col-md-3">
-              <div className={styles.card}>
-                <div className="text-center">
-                  <button className="btn btn-success" onClick={shareit}>
-                    Share
-                  </button>
-                </div>
-              </div>
+            <div className="col-md-3 mb-2">
+              <Card>
+                <CardContent sx={{ textAlign: "center" }}>
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={toggleDrawer(true)}
+                  >
+                    Menu
+                  </Button>
+                  <SwipeableDrawer
+                    anchor={"left"}
+                    open={open}
+                    onClose={toggleDrawer(false)}
+                    onOpen={toggleDrawer(true)}
+                    PaperProps={{
+                      style: { minWidth: "150px" },
+                    }}
+                  >
+                    <MenuItem onClick={() => router.push("./classes")}>
+                      classes
+                    </MenuItem>
+                    <MenuItem onClick={() => router.push("./p5")}>p5</MenuItem>
+                    <MenuItem onClick={() => router.push("./glassy")}>
+                      Glassy
+                    </MenuItem>
+                  </SwipeableDrawer>
+                </CardContent>
+              </Card>
             </div>
-            <div className="col-md-3">
-              <div className={styles.card}>
-                <div className="text-center">
-                  <button className="btn btn-success" onClick={vibrate}>
-                    Vibrate
-                  </button>
-                </div>
-              </div>
+            <div className="col-md-3 mb-2">
+              <ShareAPI />
             </div>
-            <div className="col-md-3">
-              <div className={styles.card}>
-                <div className="text-center">
-                  <h5>Orientation</h5>
-                  {<Compass />}
-                </div>
-              </div>
+            <div className="col-md-3 mb-2">
+              <VibrateAPI />
+            </div>
+            <div className="col-md-3 mb-2">
+              <BatteryAPI />
+            </div>
+            <div className="col-md-3 mb-2">
+              <OrientationAPI />
             </div>
           </div>
         </div>

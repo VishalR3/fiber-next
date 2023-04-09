@@ -10,10 +10,10 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
-      {/* <ThemeProvider> */}
-      {/* <CssBaseline /> */}
-      <Component {...pageProps} />
-      {/* </ThemeProvider> */}
+      <ThemeProvider theme={theme}>
+        {/* <CssBaseline /> */}
+        <Component {...pageProps} />
+      </ThemeProvider>
     </>
   );
 }
