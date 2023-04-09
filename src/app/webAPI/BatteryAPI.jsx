@@ -68,31 +68,35 @@ function updateDischargingInfo(dischargingTime) {
 export default function BatteryAPI() {
   const batterySnap = useSnapshot(battery);
   useEffect(() => {
-    navigator.getBattery().then((batteryData) => {
-      function updateAllBatteryInfo() {
-        updateChargeInfo(batteryData.charging);
-        updateLevelInfo(batteryData.level);
-        updateChargingInfo(batteryData.chargingTime);
-        updateDischargingInfo(batteryData.dischargingTime);
-      }
-      updateAllBatteryInfo();
+    try {
+      navigator.getBattery().then((batteryData) => {
+        function updateAllBatteryInfo() {
+          updateChargeInfo(batteryData.charging);
+          updateLevelInfo(batteryData.level);
+          updateChargingInfo(batteryData.chargingTime);
+          updateDischargingInfo(batteryData.dischargingTime);
+        }
+        updateAllBatteryInfo();
 
-      batteryData.addEventListener("chargingchange", () => {
-        updateChargeInfo(batteryData.charging);
-      });
+        batteryData.addEventListener("chargingchange", () => {
+          updateChargeInfo(batteryData.charging);
+        });
 
-      batteryData.addEventListener("levelchange", () => {
-        updateLevelInfo(batteryData.level);
-      });
+        batteryData.addEventListener("levelchange", () => {
+          updateLevelInfo(batteryData.level);
+        });
 
-      batteryData.addEventListener("chargingtimechange", () => {
-        updateChargingInfo(batteryData.chargingTime);
-      });
+        batteryData.addEventListener("chargingtimechange", () => {
+          updateChargingInfo(batteryData.chargingTime);
+        });
 
-      batteryData.addEventListener("dischargingtimechange", () => {
-        updateDischargingInfo(batteryData.dischargingTime);
+        batteryData.addEventListener("dischargingtimechange", () => {
+          updateDischargingInfo(batteryData.dischargingTime);
+        });
       });
-    });
+    } catch (e) {
+      console.log(e);
+    }
   }, []);
   return (
     <Card>
